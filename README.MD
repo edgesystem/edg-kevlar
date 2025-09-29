@@ -62,6 +62,20 @@ Item('colete_tatico', function(data, slot)
 end)
 
 
+Item('placa_rapida', function(data, slot)
+    local ped = cache.ped
+    local currentArmour = GetPedArmour(ped)
+
+    -- Só repara se já existir colete equipado e não estiver completo
+    if currentArmour > 0 and currentArmour < 100 then
+        ox_inventory:useItem(data, function(success)
+            if success then
+                local repaired = math.min(currentArmour + 25, 100)
+                SetPedArmour(ped, repaired)
+            end
+        end)
+    end
+end)
 
 
 
@@ -105,6 +119,16 @@ Coloque os itens em uma posição de sua preferência (ex: linha 414 para baixo)
 		image = "colete_tatico.png",
 		anim = { dict = "clothingshirt", clip = "try_shirt_positive_d" },
 		usetime = 3500,
+	},
+},
+["placa_rapida"] = {
+	label = "Placa Rápida",
+	weight = 100,
+	stack = false,
+	client = {
+		image = "placa_rapida.png",
+		anim = { dict = "clothingshirt", clip = "try_shirt_positive_d" },
+		usetime = 1800,
 	},
 },
 
